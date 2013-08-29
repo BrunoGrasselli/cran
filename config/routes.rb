@@ -1,4 +1,7 @@
 Cran::Application.routes.draw do
+  resources :packages
+  root to: 'packages#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

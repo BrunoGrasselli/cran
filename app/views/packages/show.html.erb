@@ -1,0 +1,16 @@
+<div>
+  <%= @package.name %>
+</div>
+
+<div>
+  <% @package.versions.each do |version| %>
+    <span class="<%= 'current_version' if @package.current_version == version %>">
+      <%= version %>
+    </span>
+  <% end %>
+</div>
+
+<div>
+  <%= @package.description %>
+</div>
+
