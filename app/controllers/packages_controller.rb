@@ -9,5 +9,6 @@ class PackagesController < ApplicationController
 
   def search
     @packages = Package.where(name: /#{params[:query]}/)
+    render layout: false
   end
 end
