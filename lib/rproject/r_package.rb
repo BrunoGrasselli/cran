@@ -4,7 +4,7 @@ require 'rubygems/package'
 require 'zlib'
 
 module RProject
-  class Package
+  class RPackage
     CRAN_URL = 'http://cran.r-project.org/src/contrib'
 
     attr_reader :name, :version

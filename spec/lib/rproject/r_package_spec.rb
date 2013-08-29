@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RProject::Package do
+describe RProject::RPackage do
   describe ".all" do
     before do
       body = %{
