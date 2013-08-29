@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Package do
   describe 'attributes' do
-    subject { described_class.new name: 'Test', versions: ['1.2.3', '1.3.0'], description: 'Some description' }
+    subject { described_class.new name: 'Test', versions: ['1.2.3', '1.3.0'], description: 'Some description', current_version: '1.3.0' }
 
     its(:name)            { should eq 'Test' }
     its(:versions)        { should eq ['1.2.3', '1.3.0'] }
