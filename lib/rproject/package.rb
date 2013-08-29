@@ -9,7 +9,6 @@ module RProject
 
     def self.all
       body = open(URL).read
-
       Dcf.parse(body.strip).map {|content| new(content)}
     end
 
