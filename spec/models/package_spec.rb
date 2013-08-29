@@ -13,4 +13,8 @@ describe Package do
   it "has authors" do
     described_class.new.authors.build.should be_a Author
   end
+
+  it "has maintainer" do
+    described_class.new.build_maintainer.should be_a Maintainer
+  end
 end
