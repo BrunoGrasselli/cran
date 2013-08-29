@@ -7,7 +7,7 @@ describe Author do
     its(:name) { should eq 'Test' }
   end
 
-  it "has packages" do
-    described_class.new.packages.build.should be_a Package
+  it "belongs to package" do
+    described_class.new.build_package.should be_a Package
   end
 end
