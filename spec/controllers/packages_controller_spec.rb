@@ -4,13 +4,20 @@ describe PackagesController do
   describe "index with GET" do
     before do
       Package.create! name: 'Test', updated_at: 2.days.ago
-      Package.create! name: 'Test 2', updated_at: Time.now
+      Package.create! name: 'Test 2', updated_at: 1.day.ago + 10.seconds
       Package.create! name: 'Test 3'
     end
 
     it "assigns @latest_packages" do
       get :index
-      assigns(:latest_packages).map(&:name).should eq ['Test 2', 'Test 3']
+      assigns(:latest_packages).map(&:name).should eq ['Test 3', 'Test 2']
+    end
+
+    it "limits @latest_packages to 5" do
+      5.times {|n| Package.create! name: "Test #{n + 4}", updated_at: Time.now + n + 1 }
+      get :index
+      assigns(:latest_packages).map(&:name).should eq ['Test 8', 'Test 7', 'Test 6', 'Test 5', 'Test 4']
+
     end
 
     it "should be success" do
