@@ -17,7 +17,6 @@ describe PackagesController do
       5.times {|n| Package.create! name: "Test #{n + 4}", updated_at: Time.now + n + 1 }
       get :index
       assigns(:latest_packages).map(&:name).should eq ['Test 8', 'Test 7', 'Test 6', 'Test 5', 'Test 4']
-
     end
 
     it "should be success" do
