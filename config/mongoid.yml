@@ -1,0 +1,14 @@
+development:
+  sessions:
+    default:
+      database: cran_dev
+      hosts:
+        - localhost:27017
+
+test:
+  sessions:
+    default:
+      database: cran_test
+      hosts:
+        - localhost:27017
+

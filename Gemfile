@@ -7,11 +7,13 @@ gem 'rails', '3.2.14'
 
 gem 'sqlite3'
 gem 'thin'
+gem 'mongoid'
 
 group :test do
   gem 'rspec-rails'
   gem 'webmock'
   gem 'treetop-dcf'
+  gem 'database_cleaner'
 end
 
 # Gems used only for assets and not required
