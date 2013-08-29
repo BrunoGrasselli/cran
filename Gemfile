@@ -10,6 +10,8 @@ gem 'thin'
 
 group :test do
   gem 'rspec-rails'
+  gem 'webmock'
+  gem 'treetop-dcf'
 end
 
 # Gems used only for assets and not required
