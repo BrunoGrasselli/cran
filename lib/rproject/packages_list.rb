@@ -1,4 +1,3 @@
-puts "read"
 module RProject
   class PackagesList
   end
