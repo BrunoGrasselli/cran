@@ -21,31 +21,31 @@ module RProject
 
     def description
       return @description if @description
-      load_info
+      load_info_from_description
       @description
     end
 
     def authors
       return @authors if @authors
-      load_info
+      load_info_from_description
       @authors
     end
 
     def maintainer_name
       return @maintainer_name if @maintainer_name
-      load_info
+      load_info_from_description
       @maintainer_name
     end
 
     def maintainer_email
       return @maintainer_email if @maintainer_email
-      load_info
+      load_info_from_description
       @maintainer_email
     end
 
     private
 
-    def load_info
+    def load_info_from_description
       source = open("#{CRAN_URL}/#{name}_#{version}.tar.gz")
       tar = Gem::Package::TarReader.new(Zlib::GzipReader.new(source))
       tar.rewind
