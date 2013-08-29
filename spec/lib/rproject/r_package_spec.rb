@@ -52,7 +52,9 @@ NeedsCompilation: no
 
     subject { described_class.all.first }
 
-    its(:description) { should eq %{TExPosition is an extension of ExPosition for two table analyses, specifically, discriminant analyses.} }
+    its(:description)      { should eq %{TExPosition is an extension of ExPosition for two table analyses, specifically, discriminant analyses.} }
+    its(:maintainer_name)  { should eq 'Derek Beaton' }
+    its(:maintainer_email) { should eq 'exposition.software@gmail.com' }
 
     describe "#authors" do
       it "returns package authors" do

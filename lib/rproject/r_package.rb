@@ -31,6 +31,18 @@ module RProject
       @authors
     end
 
+    def maintainer_name
+      return @maintainer_name if @maintainer_name
+      load_info
+      @maintainer_name
+    end
+
+    def maintainer_email
+      return @maintainer_email if @maintainer_email
+      load_info
+      @maintainer_email
+    end
+
     private
 
     def load_info
@@ -47,6 +59,9 @@ module RProject
     def load_attributes_from(description_file)
       @authors = description_file['Author'].split(',').map(&:strip)
       @description = description_file['Description']
+      description_file['Maintainer'].match /([^<]+) <([^>]+)>/
+      @maintainer_name = $1
+      @maintainer_email = $2
     end
   end
 end
