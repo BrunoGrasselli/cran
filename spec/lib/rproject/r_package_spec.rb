@@ -30,14 +30,14 @@ NeedsCompilation: no
     end
   end
 
-  describe "attributes" do
+  describe "simple attributes" do
     subject { described_class.new('Package' => 'Test', 'Version' => '1.2.3') }
 
     its(:name)    { should eq 'Test' }
     its(:version) { should eq '1.2.3' }
   end
 
-  describe "#description" do
+  context "attibutes stored inside the tar.gz" do
     before do
       body = %{
 Package: TExPosition
@@ -50,9 +50,15 @@ NeedsCompilation: no
       stub_request(:get, "http://cran.r-project.org/src/contrib/TExPosition_2.0.2.tar.gz").to_return({body: File.read('./spec/support/data/TExPosition_2.0.2.tar.gz')})
     end
 
-    it "returns package description" do
-      package = described_class.all.first
-      package.description.should eq %{TExPosition is an extension of ExPosition for two table analyses, specifically, discriminant analyses.}
+    subject { described_class.all.first }
+
+    its(:description) { should eq %{TExPosition is an extension of ExPosition for two table analyses, specifically, discriminant analyses.} }
+
+    describe "#authors" do
+      it "returns package authors" do
+        package = described_class.all.first
+        package.authors.should eq ['Derek Beaton', 'Jenny Rieck', 'Cherise R. Chin Fatt', 'Herve Abdi']
+      end
     end
   end
 end

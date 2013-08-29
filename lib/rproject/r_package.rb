@@ -20,17 +20,32 @@ module RProject
     end
 
     def description
-      @description ||= load_description
+      return @description if @description
+      load_info
+      @description
+    end
+
+    def authors
+      return @authors if @authors
+      load_info
+      @authors
     end
 
     private
 
-    def load_description
+    def load_info
       source = open("#{CRAN_URL}/#{name}_#{version}.tar.gz")
       tar = Gem::Package::TarReader.new(Zlib::GzipReader.new(source))
       tar.rewind
       description_file = ''
+
       tar.each { |entry| description_file = Dcf.parse(entry.read.strip).first if entry.full_name.include? "DESCRIPTION" }
+
+      load_attributes_from(description_file)
+    end
+
+    def load_attributes_from(description_file)
+      @authors = description_file['Author'].split(',').map(&:strip)
       @description = description_file['Description']
     end
   end
