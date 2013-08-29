@@ -1,5 +1,14 @@
+<h1>CRAN</h1>
+
+<h2>Latest packages</h2>
 <ul>
   <% @latest_packages.each do |package| %>
     <li><%= link_to package.name, package %></li>
   <% end %>
-<ul>
+</ul>
+
+<h2>Search</h2>
+<%= form_tag '/packages/search', method: :get do %>
+  <%= text_field_tag 'query' %>
+  <%= submit_tag 'Search' %>
+<% end %>

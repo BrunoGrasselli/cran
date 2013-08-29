@@ -1,0 +1,6 @@
+<h2>Packages with "<%= params[:query] %>"</h2>
+<ul>
+  <% @packages.each do |package| %>
+    <li><%= link_to package.name, package %></li>
+  <% end %>
+</ul>

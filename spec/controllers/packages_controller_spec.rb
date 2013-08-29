@@ -48,4 +48,23 @@ describe PackagesController do
       response.should render_template :show
     end
   end
+
+  describe "search with GET" do
+    it "search packages by name" do
+      Package.create! name: 'Test 123'
+      Package.create! name: 'Another name'
+      get :search, query: 'Test'
+      assigns(:packages).map(&:name).should eq ['Test 123']
+    end
+
+    it "should be success" do
+      get :search, query: 'Test'
+      response.should be_success
+    end
+
+    it "renders show" do
+      get :search, query: 'Test'
+      response.should render_template :search
+    end
+  end
 end

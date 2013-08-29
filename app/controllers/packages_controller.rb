@@ -6,4 +6,8 @@ class PackagesController < ApplicationController
   def show
     @package = Package.find params[:id]
   end
+
+  def search
+    @packages = Package.where(name: /#{params[:query]}/)
+  end
 end
