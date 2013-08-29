@@ -9,4 +9,8 @@ describe Package do
     its(:description)     { should eq 'Some description' }
     its(:current_version) { should eq '1.3.0' }
   end
+
+  it "has authors" do
+    described_class.new.authors.build.should be_a Author
+  end
 end

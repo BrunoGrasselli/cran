@@ -24,8 +24,13 @@ class PackagesUpdater
       name: r_package.name,
       description: r_package.description,
       versions: (package.try(:versions) || []) + [r_package.version],
-      current_version: r_package.version
+      current_version: r_package.version,
+      authors: load_authors(r_package.authors)
     }
+  end
+
+  def load_authors(names)
+    names.map { |name| Author.new name: name }
   end
 
   def all_packages

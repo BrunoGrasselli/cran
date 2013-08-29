@@ -4,8 +4,8 @@ describe PackagesUpdater do
   describe "#update" do
     before do
       packages = [
-        stub(name: 'Test 1', version: '1.2.0', description: 'Test'),
-        stub(name: 'Test 2', version: '1.3.3', description: 'Test...')
+        stub(name: 'Test 1', version: '1.2.0', description: 'Test', authors: ['Bruno', 'Caio']),
+        stub(name: 'Test 2', version: '1.3.3', description: 'Test...', authors: ['Bruno'])
       ]
       RProject::RPackage.stub(:all).and_return(packages)
     end
@@ -35,6 +35,14 @@ describe PackagesUpdater do
       packages.map(&:versions).should eq [['1.1.0','1.2.0'], ['1.3.3']]
       packages.map(&:current_version).should eq ['1.2.0', '1.3.3']
       packages.map(&:description).should eq ['Test', 'Test...']
+    end
+
+    it "should persist authors" do
+      described_class.new.update
+
+      package = Package.first
+
+      package.authors.map(&:name).should eq ['Bruno', 'Caio']
     end
 
     context "if existing version" do
