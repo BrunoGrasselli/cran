@@ -11,6 +11,10 @@
 </div>
 
 <div>
+  Authors: <%= @package.authors.map(&:name).join(', ') %>
+</div>
+
+<div>
   Description: <%= @package.description %>
 </div>
 
