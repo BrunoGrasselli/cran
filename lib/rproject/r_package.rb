@@ -59,8 +59,8 @@ module RProject
     def load_attributes_from(description_file)
       @authors = description_file['Author'].split(',').map(&:strip)
       @description = description_file['Description']
-      description_file['Maintainer'].match /([^<]+) <([^>]+)>/
-      @maintainer_name = $1
+      description_file['Maintainer'].match /([^<]+)<([^>]+)>/
+      @maintainer_name = $1.strip
       @maintainer_email = $2
     end
   end
