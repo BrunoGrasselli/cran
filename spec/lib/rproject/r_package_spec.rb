@@ -30,14 +30,22 @@ NeedsCompilation: no
     end
   end
 
-  describe "simple attributes" do
+  context "attributes" do
+    let(:description_file) {}
     subject { described_class.new('Package' => 'Test', 'Version' => '1.2.3') }
 
     its(:name)    { should eq 'Test' }
     its(:version) { should eq '1.2.3' }
   end
 
-  context "attibutes stored inside the tar.gz" do
+  context "attibutes from the description file" do
+    let(:description_file) { mock({
+      author: 'Author 1, Author 2',
+      description: 'Text',
+      email: 'test@email.com',
+      maintainer: 'Maintainer 1 <test2@email.com>'
+    }) }
+
     before do
       body = %{
 Package: TExPosition
@@ -47,20 +55,14 @@ License: GPL-2
 NeedsCompilation: no
       }
       stub_request(:get, "http://cran.r-project.org/src/contrib/PACKAGES").to_return({body: body})
-      stub_request(:get, "http://cran.r-project.org/src/contrib/TExPosition_2.0.2.tar.gz").to_return({body: File.read('./spec/support/data/TExPosition_2.0.2.tar.gz')})
+      RProject::DescriptionFile.stub(:new).with('TExPosition', '2.0.2').and_return(description_file)
     end
 
     subject { described_class.all.first }
 
-    its(:description)      { should eq %{TExPosition is an extension of ExPosition for two table analyses, specifically, discriminant analyses.} }
-    its(:maintainer_name)  { should eq 'Derek Beaton' }
-    its(:maintainer_email) { should eq 'exposition.software@gmail.com' }
-
-    describe "#authors" do
-      it "returns package authors" do
-        package = described_class.all.first
-        package.authors.should eq ['Derek Beaton', 'Jenny Rieck', 'Cherise R. Chin Fatt', 'Herve Abdi']
-      end
-    end
+    its(:description)      { should eq 'Text' }
+    its(:maintainer_name)  { should eq 'Maintainer 1' }
+    its(:maintainer_email) { should eq 'test2@email.com' }
+    its(:authors)          { should eq ['Author 1', 'Author 2'] }
   end
 end
