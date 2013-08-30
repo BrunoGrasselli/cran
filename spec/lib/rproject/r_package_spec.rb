@@ -58,6 +58,10 @@ NeedsCompilation: no
       RProject::DescriptionFile.stub(:new).with('TExPosition', '2.0.2').and_return(description_file)
     end
 
+    after do
+      RProject::DescriptionFile.unstub(:new)
+    end
+
     subject { described_class.all.first }
 
     its(:description)      { should eq 'Text' }
